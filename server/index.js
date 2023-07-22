@@ -4,6 +4,9 @@ import mongoose from "mongoose";
 import router from "./routes/userRoutes.js";
 const app = express();
 
+//inform that we'll recieve data in json format
+app.use(express.json())
+
 //informing the application that we'll be using routes
 app.use("/", router);
 
