@@ -12,6 +12,10 @@ const memberSchema = new schema({
     enum: ["Admin", "Moderator", "Member"],
     default: "Member",
   },
+  skills:[{
+    type:String,
+
+  }],
   tasks: [
     {
       type: mongoose.Schema.Types.ObjectId, //creating relations

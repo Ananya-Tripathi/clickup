@@ -17,5 +17,9 @@ const userSchema = new schema({
     required: true,
     minlength: 8,
   },
+  verified: {
+    type: Boolean,
+    default: false,
+  },
 });
 export default mongoose.model("User", userSchema);
