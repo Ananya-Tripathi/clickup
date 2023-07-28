@@ -1,5 +1,4 @@
-import mongoose from 'mongooes'
-
+import mongoose from "mongoose";
 const teamSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -11,6 +10,7 @@ const teamSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
+    default: Date.now,
   },
   admin: {
     type: mongoose.Schema.Types.ObjectId,
@@ -30,4 +30,4 @@ const teamSchema = new mongoose.Schema({
   ],
 });
 
-const Team = mongoose.model("Team", teamSchema);
+export default mongoose.model("Team", teamSchema);
