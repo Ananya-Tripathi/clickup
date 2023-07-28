@@ -1,5 +1,5 @@
-import mongoose from 'mongooes'
-const { schema, model } = mongoose;
+import mongoose from "mongoose";
+const schema = mongoose.Schema;
 
 const taskSchema = new schema({
   heading: {
@@ -19,13 +19,18 @@ const taskSchema = new schema({
     enum: ["Assigned", "Ongoing", "Completed"],
     default: "Assigned",
   },
-  assigned: {
+  assignedAt: {
     type: Date,
-    required: true,
+    default: Date.now
   },
   deadline: {
     type: Date,
     required: true,
   },
+  assignedTo: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
-export default model("Task", taskSchema);
+export default mongoose.model("Task", taskSchema);
