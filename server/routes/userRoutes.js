@@ -7,6 +7,7 @@ import {
   signup,
   verifyEmail,
 } from "../controller/userController.js";
+
 const router = express.Router();
 
 router.get("/", getAllUser);

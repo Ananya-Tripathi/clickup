@@ -1,8 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
 import * as dotenv from "dotenv";
-
 dotenv.config();
+import taskRouter from "./routes/taskRoutes.js";
+import teamRouter from "./routes/teamRoutes.js";
 import router from "./routes/userRoutes.js";
 const app = express();
 
@@ -10,7 +11,9 @@ const app = express();
 app.use(express.json());
 
 //informing the application that we'll be using routes
-app.use("/", router);
+app.use("/api/user", router);
+app.use("/api/task", taskRouter);
+app.use("/api/team", teamRouter);
 
 app.get("/", (req, res) => {
   res.send("whoooopss");

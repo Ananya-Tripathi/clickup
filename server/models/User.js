@@ -7,6 +7,11 @@ const userSchema = new schema({
     type: String,
     required: true,
   },
+  username: {
+    type: String,
+    unique: true,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
@@ -20,6 +25,29 @@ const userSchema = new schema({
   verified: {
     type: Boolean,
     default: false,
+  },
+  role: {
+    type: String,
+    enum: ["Admin", "Moderator", "Member"],
+    default: "Member",
+  },
+  skills:[{
+    type:String,
+
+  }],
+  tasks: [
+    {
+      type: mongoose.Schema.Types.ObjectId, //creating relations
+      ref: "Task",
+    },
+  ],
+  taskAssigned: {
+    type: Number,
+    default: 0,
+  },
+  taskCompleted: {
+    type: Number,
+    default: 0,
   },
 });
 export default mongoose.model("User", userSchema);

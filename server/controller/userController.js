@@ -25,7 +25,7 @@ export const getAllUser = async (req, res, next) => {
   } catch (err) {
     console.log(err);
   }
-  
+
   if (!users) {
     return res.status(404).json({ message: "No User Found" });
   } else {
@@ -38,7 +38,8 @@ export const deleteuser = async (req, res, next) => {
   let prevUser;
   try {
     prevUser = await User.findOne({ email });
-    if (!prevUser) {
+
+    if (!prevUser || prevUser.password != password) {
       return res.status(400).json({ message: "User not found" });
     } else {
       await User.deleteOne(prevUser);
@@ -49,10 +50,10 @@ export const deleteuser = async (req, res, next) => {
   }
 };
 export const signup = async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { name, username, email, password } = req.body;
   let prevUser;
   try {
-    prevUser = await User.findOne({ email });
+    prevUser = await User.findOne({ username, email });
 
     if (prevUser || password.length < 8) {
       return res.status(400).json({ message: "Invalid Entry" });
@@ -61,6 +62,7 @@ export const signup = async (req, res, next) => {
       //Creating object using details from frontend and defined schema
       const user = new User({
         name,
+        username,
         email,
         password: hashedPass,
       });
@@ -100,12 +102,12 @@ export const login = async (req, res, next) => {
   try {
     prevUser = await User.findOne({ email });
     const isValid = bcrypt.compareSync(password, prevUser.password);
-    if (!prevUser && !isValid) {
+    if (!prevUser || !isValid) {
       return res.status(400).json({ message: "Invalid username or password" });
     }
     jwt.sign(
       { email, userId: prevUser._id },
-      "ndkfjhsenvjejsfyana",
+      process.env.SECRET_KEY,
       {},
       (err, token) => {
         if (err) throw err;
@@ -130,7 +132,7 @@ export const logout = async (req, res, next) => {
 };
 export const verifyEmail = async (req, res, next) => {
   const { token } = req.params;
-
+  console.log(token);
   try {
     const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
     const userEmail = decodedToken.email;
@@ -151,5 +153,3 @@ export const verifyEmail = async (req, res, next) => {
     return res.status(400).json({ message: "Invalid verification token." });
   }
 };
-
-
