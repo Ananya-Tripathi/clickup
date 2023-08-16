@@ -31,14 +31,21 @@ const userSchema = new schema({
     enum: ["Admin", "Moderator", "Member"],
     default: "Member",
   },
-  skills:[{
-    type:String,
-
-  }],
+  skills: [
+    {
+      type: String,
+    },
+  ],
   tasks: [
     {
       type: mongoose.Schema.Types.ObjectId, //creating relations
       ref: "Task",
+    },
+  ],
+  teams: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Team",
     },
   ],
   taskAssigned: {

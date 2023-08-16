@@ -32,5 +32,9 @@ const taskSchema = new schema({
     ref: "User",
     required: true,
   },
+  team:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"Team"
+  },
 });
 export default mongoose.model("Task", taskSchema);

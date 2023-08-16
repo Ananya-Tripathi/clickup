@@ -1,6 +1,6 @@
 import Team from "../models/Team.js";
 import User from "../models/User.js";
-
+import Comment from "../models/Comment.js";
 export const getAllTeam = async (req, res, next) => {
   let teams;
   try {
@@ -17,14 +17,15 @@ export const getAllTeam = async (req, res, next) => {
 };
 
 export const createTeam = async (req, res, next) => {
-  const { name, goal, members } = req.body;
+  const { name, goal } = req.body;
   try {
-    const memberIds = await User.find({ username: { $in: members } }).distinct("_id");
+    // const memberIds = await User.find({ username: { $in: members } }).distinct(
+    //   "_id"
+    // );
 
     const team = new Team({
       name,
       goal,
-      members: memberIds
     });
 
     await team.save();
@@ -49,21 +50,110 @@ export const deleteTeam = async (req, res, next) => {
   }
 };
 
-export const editTeam = async (req, res, next) => {
-  const TeamId = req.params.TeamId;
-  const updates = req.body;
+export const getMembers = async (req, res) => {
+  const teamId = req.params.teamId;
 
   try {
-    const updatedTeam = await Team.findByIdAndUpdate(TeamId, updates, {
-      new: true,
-    });
-
-    if (!updatedTeam) {
+    const team = await Team.findById(teamId).populate("members", "name");
+    if (!team) {
       return res.status(404).json({ message: "Team not found" });
     }
 
-    return res.status(200).json({ message: "Team updated successfully" });
+    const members = team.members;
+    return res.status(200).json({ members });
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    return res.status(500).json({ message: "Server Error" });
   }
 };
+export const addMembersToTeam = async (req, res) => {
+  const teamId = req.params.teamId;
+  const { memberIds } = req.body;
+
+  try {
+    const team = await Team.findById(teamId);
+
+    if (!team) {
+      return res.status(404).json({ message: "Team not found" });
+    }
+
+    const users = await User.find({ _id: { $in: memberIds } });
+
+    if (users.length !== memberIds.length) {
+      return res.status(404).json({ message: "One or more users not found" });
+    }
+
+    // Update the team's 'members' array and add the team ID to each user's 'teams' array
+    team.members.push(...memberIds);
+    await team.save();
+
+    for (const user of users) {
+      user.teams.push(teamId);
+      await user.save();
+    }
+
+    return res.status(200).json({ message: "Members added to the team" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server Error" });
+  }
+};
+
+export const deleteMemberFromTeam = async (req, res) => {
+  const teamId = req.params.teamId;
+  const memberId = req.params.memberId;
+
+  try {
+    const team = await Team.findById(teamId);
+
+    if (!team) {
+      return res.status(404).json({ message: "Team not found" });
+    }
+
+    const user = await User.findById(memberId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Remove the member's ID from the team's 'members' array
+    team.members = team.members.filter(
+      (member) => member.toString() !== memberId
+    );
+    await team.save();
+
+    // Remove the team's ID from the user's 'teams' array
+    user.teams = user.teams.filter((team) => team.toString() !== teamId);
+    await user.save();
+
+    return res.status(200).json({ message: "Member removed from the team" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server Error" });
+  }
+};
+
+export const addCommentToTeam = async (req, res) => {
+  const teamId = req.params.teamId;
+  const { text, postedBy } = req.body;
+
+  try {
+    const team = await Team.findById(teamId);
+
+    if (!team) {
+      return res.status(404).json({ message: 'Team not found' });
+    }
+    const newComment = {
+      text,
+      postedBy,
+    };
+    team.comments.push(newComment);
+    await team.save();
+
+    return res.status(200).json({ message: 'Comment added to the team' });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Server Error' });
+  }
+};
+

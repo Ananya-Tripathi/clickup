@@ -19,13 +19,13 @@ const teamSchema = new mongoose.Schema({
   members: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Member",
+      ref: "User",
     },
   ],
   comments: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment",
+      text: { type: String },
+      postedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     },
   ],
 });

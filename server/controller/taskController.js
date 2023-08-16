@@ -32,6 +32,8 @@ export const createTask = async (req, res, next) => {
     });
 
     await task.save();
+    user.tasks.push(task._id);
+    await user.save();
     return res.status(200).json({ message: "task added successfully" });
   } catch (err) {
     console.log(err);
