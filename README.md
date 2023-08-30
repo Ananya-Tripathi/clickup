@@ -15,7 +15,6 @@ Here are some of the key features of TaskFlex:
 
 ![image](https://github.com/Ananya-Tripathi/clickup/assets/85894546/2db12995-76fb-41b5-a5d9-2d64fec1e23d)
 
-Project Workspace
 ![image](https://github.com/Ananya-Tripathi/clickup/assets/85894546/9ace40f8-4d44-4b27-8a9e-8ac82d6daa2e)
 
 
