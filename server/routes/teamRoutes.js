@@ -8,14 +8,14 @@ import {
   deleteMemberFromTeam,
   addCommentToTeam,
 } from "../controller/teamController.js";
-
+import { checkLoggedIn } from "../middleware/auth.js";
 export const teamRouter = express.Router();
 teamRouter.get("/", getAllTeam);
-teamRouter.post("/create", createTeam);
+teamRouter.post("/create", checkLoggedIn, createTeam);
 teamRouter.get("/:teamId/members", getMembers);
 teamRouter.delete("/delete/:id", deleteTeam);
 teamRouter.post("/:teamId/add-members", addMembersToTeam);
 teamRouter.delete("/:teamId/delete-member/:memberId", deleteMemberFromTeam);
-teamRouter.post('/:teamId/add-comment', addCommentToTeam);
+teamRouter.post("/:teamId/add-comment", addCommentToTeam);
 
 export default teamRouter;

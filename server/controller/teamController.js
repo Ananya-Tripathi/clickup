@@ -1,6 +1,7 @@
 import Team from "../models/Team.js";
+import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-import Comment from "../models/Comment.js";
+// import Comment from "../models/Comment.js";
 export const getAllTeam = async (req, res, next) => {
   let teams;
   try {
@@ -18,23 +19,24 @@ export const getAllTeam = async (req, res, next) => {
 
 export const createTeam = async (req, res, next) => {
   const { name, goal } = req.body;
-  try {
-    // const memberIds = await User.find({ username: { $in: members } }).distinct(
-    //   "_id"
-    // );
+  const token = req.cookies.token;
+  const userId = jwt.verify(token, process.env.SECRET_KEY);
+  console.log(userId);
+  // try {
+  //   const team = new Team({
+  //     name,
+  //     goal,
+  //     admin: userId, // Set the admin field to the logged-in user's ID
+  //   });
 
-    const team = new Team({
-      name,
-      goal,
-    });
-
-    await team.save();
-    return res.status(200).json({ message: "Team added successfully" });
-  } catch (err) {
-    console.log(err);
-    return res.status(400).json({ message: "failed" });
-  }
+  //   await team.save();
+  //   return res.status(200).json({ message: "Team added successfully" });
+  // } catch (err) {
+  //   console.log(err);
+  //   return res.status(400).json({ message: "Failed to create team" });
+  // }
 };
+
 export const deleteTeam = async (req, res, next) => {
   const id = req.params.id;
   console.log(id);
@@ -141,7 +143,7 @@ export const addCommentToTeam = async (req, res) => {
     const team = await Team.findById(teamId);
 
     if (!team) {
-      return res.status(404).json({ message: 'Team not found' });
+      return res.status(404).json({ message: "Team not found" });
     }
     const newComment = {
       text,
@@ -150,10 +152,9 @@ export const addCommentToTeam = async (req, res) => {
     team.comments.push(newComment);
     await team.save();
 
-    return res.status(200).json({ message: 'Comment added to the team' });
+    return res.status(200).json({ message: "Comment added to the team" });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ message: 'Server Error' });
+    return res.status(500).json({ message: "Server Error" });
   }
 };
-

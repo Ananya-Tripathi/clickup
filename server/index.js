@@ -1,27 +1,22 @@
 import express from "express";
 import mongoose from "mongoose";
-import helmet from "helmet";
+
+import cors from "cors";
+
 import * as dotenv from "dotenv";
 dotenv.config();
+
 import taskRouter from "./routes/taskRoutes.js";
 import teamRouter from "./routes/teamRoutes.js";
 import router from "./routes/userRoutes.js";
 const app = express();
+import cookieParser from "cookie-parser";
 
+//using cors to access 2 different port number
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 //inform that we'll recieve data in json format
 app.use(express.json());
-app.use(
-  helmet.contentSecurityPolicy({
-    useDefaults: true, // Use default-src as a fallback for other directives
-    directives: {
-      // Add 'unsafe-inline' to script-src for allowing inline scripts
-      "script-src": ["'self'", "'unsafe-inline'"],
-      // Add 'unsafe-inline' to style-src for allowing inline styles
-      "style-src": ["'self'", "'unsafe-inline'"],
-    },
-  })
-);
-
+app.use(cookieParser());
 //informing the application that we'll be using routes
 app.use("/api/user", router);
 app.use("/api/task", taskRouter);

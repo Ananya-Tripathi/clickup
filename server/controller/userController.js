@@ -70,12 +70,12 @@ export const sendVerificationLink = async (req, res, next) => {
       process.env.SECRET_KEY,
       { expiresIn: "1d" }
     );
-
+    console.log("token", verificationToken);
     const mailOptions = {
       from: process.env.NODEMAILER_EMAIL,
       to: user.email,
       subject: "Email Verification",
-      html: `<p>Please click the following link to verify your email:</p><a href="http://localhost:5000/users/verify/${verificationToken}">Verify Email</a>`,
+      html: `<p>Please click the following link to verify your email:</p><a href="http://localhost:5000/api/user/verify/${verificationToken}">Verify Email</a>`,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -112,7 +112,7 @@ export const signup = async (req, res, next) => {
         .json({ message: "Username or email already exists." });
     }
 
-    if (password.length < 8) {
+    if (password.length < 8 ) {
       return res
         .status(400)
         .json({ message: "Password should be at least 8 characters long." });
@@ -166,25 +166,19 @@ export const verifyEmail = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    console.log(password);
     let prevUser;
     prevUser = await User.findOne({ email });
     const isValid = bcrypt.compareSync(password, prevUser.password);
     if (!prevUser || !isValid) {
       return res.status(400).json({ message: "Invalid username or password" });
     }
-    jwt.sign(
+    const token = jwt.sign(
       { email, userId: prevUser._id },
       process.env.SECRET_KEY,
-      {},
-      (err, token) => {
-        if (err) throw err;
-        res.cookie("token", token).json({
-          id: prevUser._id,
-          email,
-        });
-      }
+      { expiresIn: "1d" }
     );
-    console.log("cookie created");
+    res.cookie("token", token, { httpOnly: "true" });
     return res.status(200).json({ message: "Login Successfull" });
   } catch (err) {
     console.log(err);
