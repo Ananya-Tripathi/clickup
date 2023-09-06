@@ -10,7 +10,7 @@ export const getAllTeam = async (req, res, next) => {
     if (!teams) {
       return res.status(400).json({ message: "No Team Found" });
     } else {
-      return res.status(200).json({ teams });
+      return res.status(200).json( teams );
     }
   } catch (err) {
     console.log(err);

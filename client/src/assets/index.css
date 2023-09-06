@@ -14,11 +14,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+input {
+  @apply text-darkGrey;
+}
 button {
   @apply bg-orange font-semibold px-4 py-2 text-white rounded-lg mx-auto my-2;
 }
-.headText{
-  @apply text-white font-semibold
+.headText {
+  @apply text-white font-semibold;
 }
 .taskBox {
   @apply bg-darkGrey rounded-md p-4;

@@ -1,6 +1,9 @@
 import React from "react";
 import { PlusCircle } from "lucide-react";
 const Tasks = () => {
+  async function addComment() {
+    console.log("good");
+  }
   return (
     <div className=" bg-lightGrey min-h-screen w-4/6 mx-auto text-center text-white p-2 ">
       <div className="taskBox my-1 px-1">
@@ -18,7 +21,11 @@ const Tasks = () => {
           <p className="font-semibold">Completed</p>
         </div>
       </div>
-      <div className="taskBox m-1 h-16 flex items-center justify-center ">
+
+      <form
+        className="taskBox m-1 h-16 flex items-center justify-center "
+        onSubmit={addComment}
+      >
         <button className="flex items-center justify-center  h-10 w-10 rounded-full mr-2">
           <PlusCircle size={30} className="flex-shrink-0" />
         </button>
@@ -27,7 +34,7 @@ const Tasks = () => {
           type="text"
           placeholder="Add Comment"
         />
-      </div>
+      </form>
     </div>
   );
 };
