@@ -38,7 +38,7 @@ const Home = () => {
             <>
               <Login />
               <p
-                className="mt-[-24px] hover:cursor-pointer"
+                className="mt-[-24px] hover:cursor-pointer underline hover:text-orange"
                 onClick={handleSignupClick}
               >
                 New here? Sign up

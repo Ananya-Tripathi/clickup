@@ -1,15 +1,28 @@
 import React, { useState } from "react";
+// import { Navigate } from "react-router-dom";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
+  const [redirect, setRedirect] = useState("");
   async function Login(ev) {
     ev.preventDefault();
-    const { data } = await axios.post(`${process.env.BASE_URL}/user/login`, {
-      email: username,
-      password: password,
-    });
-    console.log(data);
+    const { data } = await axios
+      .post(`http://localhost:5000/api/user/login`, {
+        email: email,
+        password: password,
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setRedirect(true);
+    alert(data.message);
+    console.log(data.token);
+    // <Navigate to="/workspace" />;
+  }
+  if (redirect) {
+    return <Navigate to={"/workspace"} />;
   }
   return (
     <div className="w-96 h-64 my-auto ">
@@ -19,9 +32,9 @@ const Login = () => {
       >
         <input
           type="text"
-          placeholder="Username"
+          placeholder="example@mail.com"
           className="block w-full p-2 border rounded-lg mb-4"
-          onChange={(ev) => setUsername(ev.target.value)}
+          onChange={(ev) => setemail(ev.target.value)}
         />
         <input
           type="password"

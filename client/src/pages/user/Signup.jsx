@@ -14,6 +14,7 @@ const Signup = () => {
       email,
       password,
     });
+    alert(data.message);
     console.log(data);
   }
   return (
