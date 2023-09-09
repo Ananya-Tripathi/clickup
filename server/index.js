@@ -22,6 +22,7 @@ app.use("/api/user", router);
 app.use("/api/task", taskRouter);
 app.use("/api/team", teamRouter);
 
+
 app.get("/", (req, res) => {
   res.send("whoooopss");
 });
