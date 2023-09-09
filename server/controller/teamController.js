@@ -1,6 +1,7 @@
 import Team from "../models/Team.js";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import Task from "../models/Task.js";
 // import Comment from "../models/Comment.js";
 export const getAllTeam = async (req, res, next) => {
   let teams;
@@ -10,7 +11,7 @@ export const getAllTeam = async (req, res, next) => {
     if (!teams) {
       return res.status(400).json({ message: "No Team Found" });
     } else {
-      return res.status(200).json( teams );
+      return res.status(200).json(teams);
     }
   } catch (err) {
     console.log(err);
@@ -61,8 +62,8 @@ export const getMembers = async (req, res) => {
       return res.status(404).json({ message: "Team not found" });
     }
 
-    const members = team.members;
-    return res.status(200).json({ members });
+    const members = team.members.map((member) => member.name);
+    return res.status(200).json(members);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Server Error" });
@@ -153,6 +154,41 @@ export const addCommentToTeam = async (req, res) => {
     await team.save();
 
     return res.status(200).json({ message: "Comment added to the team" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server Error" });
+  }
+};
+
+export const getTeamData = async (req, res) => {
+  const { teamId } = req.params;
+
+  try {
+    // Find the team
+    const team = await Team.findById(teamId);
+
+    if (!team) {
+      return res.status(404).json({ message: "Team not found" });
+    }
+
+    // Find tasks related to the team
+    const assignedTasks = await Task.find({ team: teamId, status: "Assigned" });
+    const ongoingTasks = await Task.find({ team: teamId, status: "Ongoing" });
+    const completedTasks = await Task.find({
+      team: teamId,
+      status: "Completed",
+    });
+
+    // Prepare the response
+    const teamData = {
+      name: team.name,
+      description: team.goal,
+      assignedTasks,
+      ongoingTasks,
+      completedTasks,
+    };
+
+    return res.status(200).json(teamData);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Server Error" });

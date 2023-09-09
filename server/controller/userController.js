@@ -166,7 +166,6 @@ export const verifyEmail = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    console.log(password);
     let prevUser;
     prevUser = await User.findOne({ email });
     const isValid = bcrypt.compareSync(password, prevUser.password);
@@ -179,7 +178,9 @@ export const login = async (req, res, next) => {
       { expiresIn: "1d" }
     );
     res.cookie("token", token, { httpOnly: "true" });
-    return res.status(200).json({ message: "Login Successfull" });
+    return res
+      .status(200)
+      .json({ message: "Login Successfull" }, { id: prevUser._id });
   } catch (err) {
     console.log(err);
   }
