@@ -180,7 +180,7 @@ export const login = async (req, res, next) => {
     res.cookie("token", token, { httpOnly: "true" });
     return res
       .status(200)
-      .json({ message: "Login Successfull" }, { id: prevUser._id });
+      .json({ message: "Login Successfull", id: prevUser._id });
   } catch (err) {
     console.log(err);
   }

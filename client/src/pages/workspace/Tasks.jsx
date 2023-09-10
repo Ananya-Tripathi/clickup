@@ -20,7 +20,7 @@ const Tasks = (props) => {
     console.log("good");
   }
   return (
-    <div className=" bg-lightGrey min-h-screen w-4/6 mx-auto text-center text-white p-2 ">
+    <div className=" bg-lightGrey min-h-screen w-[67%] mx-auto text-center text-white p-2 rounded-md">
       <div className="taskBox my-1 px-1">
         <h1 className="text-2xl font-bold">{teamData.name}</h1>
         <p className="">{teamData.description}</p>
@@ -79,7 +79,7 @@ const Tasks = (props) => {
       </div>
 
       <form
-        className="taskBox m-1 h-16 flex items-center justify-center bottom-2 w-[65%] absolute "
+        className="taskBox mx-1 h-16 flex items-center justify-center bottom-1 w-[65%] absolute "
         onSubmit={addComment}
       >
         <button className="flex items-center justify-center  h-10 w-10 rounded-full mr-2">

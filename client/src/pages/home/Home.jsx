@@ -15,11 +15,11 @@ const Home = () => {
 
   return (
     <div className="bg-darkGrey min-h-screen flex flex-grow-0 space-x-10">
-      <div className="min-h-screen px-10 bg-orange text-orange"></div>
+      <div className="min-h-screen px-10 bg-purple "></div>
       <div className="md:flex md:flex-grow-0 space-x-52">
         <div className="text-white max-h-xl min-w-2xl max-w-3xl m-auto">
           <p className="font-bold text-7xl ">CLICK UP!</p>
-          <p className="font-bold text-2xl px-2">Let's get work done ?</p>
+          <p className="font-bold text-2xl px-2 text-pink">Let's get work done ?</p>
         </div>
         <div className="text-white bg-lightGrey text-center h-2/6 mt-20 pt-6 ">
           <button
@@ -38,7 +38,7 @@ const Home = () => {
             <>
               <Login />
               <p
-                className="mt-[-24px] hover:cursor-pointer underline hover:text-orange"
+                className="mt-[-24px] hover:cursor-pointer underline hover:text-pink"
                 onClick={handleSignupClick}
               >
                 New here? Sign up

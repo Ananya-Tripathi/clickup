@@ -17,13 +17,13 @@ const Member = (props) => {
     }
   }, [props.teamID, getMembers]);
   return (
-    <div className="bg-darkGrey h-[290px] m-1 w-[200px] flex-shrink-0 p-4 text-center">
+    <div className="sidediv relative">
       <p className="headText text-lg border-white border-b-2 ">Members</p>
       <div className="my-2 overflow-scroll flex flex-col">
         {member.map((team, index) => {
           return (
             <button
-              className="headText text-md rounded-sm bg-lightGrey my-1 hover:cursor-pointer px-2 py-1 w-[10rem]"
+              className="divList"
               key={index}
             >
               {team}
@@ -33,6 +33,7 @@ const Member = (props) => {
           );
         })}
       </div>
+      <button className="divButton">Add Member</button>
     </div>
   );
 };

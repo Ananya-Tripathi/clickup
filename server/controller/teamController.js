@@ -136,8 +136,6 @@ export const deleteMemberFromTeam = async (req, res) => {
   }
 };
 
-
-
 export const getTeamData = async (req, res) => {
   const { teamId } = req.params;
 

@@ -12,7 +12,7 @@ const Logout = () => {
   if (redirect) {
     return <Navigate to={"/"} />;
   }
-  return <button onClick={logout}>Logout</button>;
+  return <button onClick={logout} className="divButton">Logout</button>;
 };
 
 export default Logout;
