@@ -51,7 +51,7 @@ const Teams = () => {
             <button className="divButton">Add Team</button>
           </div>
           <Options />
-        </div>
+        </div>      
         {teamID ? (
           <>
             <Tasks teamID={teamID} />
@@ -65,7 +65,7 @@ const Teams = () => {
             <div className="text-white max-h-xl min-w-2xl max-w-3xl mt-44 ml-10">
               <p className="font-bold text-7xl ">Get Started</p>
               <p className="font-bold text-2xl px-2 text-pink">
-                Let's get work done
+                Let's get work done . . .
               </p>
             </div>
           </>

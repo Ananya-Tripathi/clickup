@@ -5,11 +5,17 @@ import { PlusCircle } from "lucide-react";
 const Tasks = (props) => {
   const [teamData, setTeamData] = useState("");
   const getData = useCallback(async () => {
-    console.log("Team Id", props.teamID);
+    console.log("Task Team Id", props.teamID);
+    // console.log(`http://localhost:5000/api/team/${props.teamID}/getTeamData`)
     const { data } = await axios.get(
-      `http://localhost:5000/api/team/${props.teamID}/getTeamData`
+      `http://localhost:5000/api/team/${props.teamID}/getTeamData`,
+      {},
+      {
+        withCredentials: true,
+      }
     );
     setTeamData(data);
+    alert(data.message);
   }, [props.teamID]);
   useEffect(() => {
     if (props.teamID) {
@@ -20,7 +26,7 @@ const Tasks = (props) => {
     console.log("good");
   }
   return (
-    <div className=" bg-lightGrey min-h-screen w-[67%] mx-auto text-center text-white p-2 rounded-md">
+    <div className=" bg-lightGrey min-h-screen w-[67%] mx-auto text-center text-white p-2 rounded-md shadow-inner shadow-grey">
       <div className="taskBox my-1 px-1">
         <h1 className="text-2xl font-bold">{teamData.name}</h1>
         <p className="">{teamData.description}</p>
