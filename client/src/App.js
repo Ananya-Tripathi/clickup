@@ -6,7 +6,7 @@ export default function App() {
     <div>
       <Routes>
         <Route index element={<Home />} />
-        <Route path="/workspace" element={<Teams />} />
+        <Route path="/workspace/:id" element={<Teams />} />
         {/* <Workspace /> */}
       </Routes>
     </div>

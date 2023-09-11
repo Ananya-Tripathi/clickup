@@ -6,6 +6,7 @@ const Login = () => {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState("");
+  const [id, setID] = useState("");
   async function Login(ev) {
     ev.preventDefault();
     const { data } = await axios
@@ -18,11 +19,12 @@ const Login = () => {
       });
     setRedirect(true);
     alert(data.message);
-    console.log(data.token);
+    setID(data.id);
+
     // <Navigate to="/workspace" />;
   }
   if (redirect) {
-    return <Navigate to={"/workspace"} />;
+    return <Navigate to={`/workspace/${id}`} />;
   }
   return (
     <div className="w-96 h-64 my-auto ">
