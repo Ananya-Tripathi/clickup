@@ -5,6 +5,8 @@ import {
   editTask,
   getAllTask,
 } from "../controller/taskController.js";
+// import { checkAdmin, checkLoggedIn } from "../middleware/auth.js";
+
 const taskRouter = express.Router();
 
 taskRouter.get("/", getAllTask);
