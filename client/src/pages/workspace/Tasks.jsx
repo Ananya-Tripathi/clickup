@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useCallback, useEffect } from "react";
-import { PlusCircle } from "lucide-react";
+import {  PlusCircle } from "lucide-react";
+import { EditTeam } from "../modals/EditTeam";
 const Tasks = (props) => {
   const [teamData, setTeamData] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const getData = useCallback(async () => {
     console.log("Task Team Id", props.teamID);
     // console.log(`http://localhost:5000/api/team/${props.teamID}/getTeamData`)
@@ -15,7 +17,7 @@ const Tasks = (props) => {
       }
     );
     setTeamData(data);
-    alert(data.message);
+    // alert(data.message);
   }, [props.teamID]);
   useEffect(() => {
     if (props.teamID) {
@@ -28,8 +30,21 @@ const Tasks = (props) => {
   return (
     <div className=" bg-lightGrey min-h-screen w-[67%] mx-auto text-center text-white p-2 rounded-md shadow-inner shadow-grey">
       <div className="taskBox my-1 px-1">
-        <h1 className="text-2xl font-bold">{teamData.name}</h1>
+        <h1
+          className="text-2xl font-bold hover:cursor-pointer"
+          onClick={() => setShowModal(true)}
+        >
+          {teamData.name}
+        </h1>
         <p className="">{teamData.description}</p>
+        <EditTeam
+          onClose={() => {
+            setShowModal(false);
+          }}
+          show={showModal}
+          name={teamData.name}
+          goal={teamData.description}
+        />
       </div>
       <div className="flex flex-grow-0 space-x-2 px-1">
         <div className="taskBox w-[290px]   ">

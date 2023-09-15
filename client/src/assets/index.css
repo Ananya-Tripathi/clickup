@@ -27,11 +27,17 @@ button {
   @apply bg-darkGrey rounded-md p-4;
 }
 .sidediv {
-  @apply bg-darkGrey h-[18.5rem] m-1 rounded-md w-[200px] flex-shrink-0 p-4 text-center z-10 shadow-inner shadow-lightGrey;
+  @apply bg-darkGrey h-[18.5rem] m-1 rounded-md w-[200px] flex-shrink-0 p-4 text-center  shadow-inner shadow-lightGrey ;
 }
 .divButton {
-  @apply absolute bottom-0 left-0 right-0 text-sm;
+  @apply absolute bottom-0 left-0 right-0 text-sm h-6 p-0;
 }
 .divList {
   @apply headText text-sm rounded-sm bg-lightGrey border-0  hover:cursor-pointer p-1 m-1 w-[10rem];
 }
+/* .modal-wrapper {
+  @apply fixed inset-0 bg-darkGrey backdrop-blur-sm bg-opacity-25 flex justify-center items-center;
+}
+.modalContainer {
+  @apply w-[600px] bg-darkGrey rounded-md flex flex-col p-4 shadow-lightGrey shadow-inner;
+} */

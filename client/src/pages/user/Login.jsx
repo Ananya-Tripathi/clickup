@@ -17,11 +17,12 @@ const Login = () => {
       .catch((error) => {
         console.log(error);
       });
-    setRedirect(true);
-    alert(data.message);
     setID(data.id);
+    setRedirect(true);
+    console.log(data);
+    alert(data.message);
 
-    // <Navigate to="/workspace" />;
+    console.log(id);
   }
   if (redirect) {
     return <Navigate to={`/workspace/${id}`} />;

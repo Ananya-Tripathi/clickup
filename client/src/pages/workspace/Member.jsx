@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useCallback } from "react";
 import React, { useEffect, useState } from "react";
-
+import { EditMember } from "../modals/EditMember";
 const Member = (props) => {
   const [member, setMembers] = useState([]);
   const [newUsers, setNewUsers] = useState([]);
-
+  const [showModal, setShowModal] = useState(false);
   async function addMember() {
     const { data } = await axios.post(
       `http://localhost:5000/api/team/${props.teamID}/add-members`,
@@ -15,14 +15,14 @@ const Member = (props) => {
     );
   }
 
-  async function fetchUsers() {
-    try {
-      const { data } = await axios.get(`http://localhost:5000/api/user/`);
-      console.log(data);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  }
+  // async function fetchUsers() {
+  //   try {
+  //     const { data } = await axios.get(`http://localhost:5000/api/user/`);
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.error("Error fetching users:", error);
+  //   }
+  // }
 
   const getMembers = useCallback(async () => {
     console.log(" MTeam Id", props.teamID);
@@ -51,9 +51,20 @@ const Member = (props) => {
           );
         })}
       </div>
-      <button className="divButton" onClick={fetchUsers}>
+      <button
+        className="divButton"
+        onClick={() => {
+          setShowModal(!showModal);
+        }}
+      >
         Add Member
       </button>
+      {/* {console.log(showModal)} */}
+      <EditMember
+        onClose={() => setShowModal(false)}
+        show={showModal}
+        teamID={props.teamID}
+      />
     </div>
   );
 };

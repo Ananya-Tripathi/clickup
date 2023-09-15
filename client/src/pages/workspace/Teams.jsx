@@ -4,9 +4,11 @@ import Tasks from "./Tasks";
 import Comments from "./Comments";
 import Member from "./Member";
 import Options from "./Options";
+import { AddTeam } from "../modals/AddTeam.jsx";
 const Teams = () => {
   const [teams, setTeams] = useState([]);
   const [teamID, setTeamID] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const selectTeam = (id) => {
     setTeamID(id);
     console.log("teamss", teamID);
@@ -33,7 +35,7 @@ const Teams = () => {
               Teamssss
             </h1>
 
-            <div className="my-2 overflow-scroll flex flex-col">
+            <div className="my-2 overflow-scroll flex flex-col h-[70%]">
               {teams.map((team) => {
                 return (
                   <button
@@ -48,15 +50,20 @@ const Teams = () => {
                 );
               })}
             </div>
-            <button className="divButton">Add Team</button>
+
+            <button className="divButton" onClick={() => setShowModal(true)}>
+              Add Team
+            </button>
+            <AddTeam onClose={() => setShowModal(false)} show={showModal} />
+           
           </div>
           <Options />
-        </div>      
+        </div>
         {teamID ? (
           <>
             <Tasks teamID={teamID} />
             <div className="my-auto">
-              <Comments />
+              <Comments teamID={teamID}/>
               <Member teamID={teamID} />
             </div>
           </>

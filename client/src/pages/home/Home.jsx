@@ -23,13 +23,13 @@ const Home = () => {
         </div>
         <div className="text-white bg-lightGrey text-center h-2/6 mt-20 pt-6 ">
           <button
-            className="button bg-lightGrey hover:text-darkGrey"
+            className="button bg-lightGrey border-0"
             onClick={handleLoginClick}
           >
             LOGIN
           </button>
           <button
-            className="button bg-lightGrey hover:text-darkGrey"
+            className="button bg-lightGrey hover:text-darkGrey border-0"
             onClick={handleSignupClick}
           >
             SIGNUP
