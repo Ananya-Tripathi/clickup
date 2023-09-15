@@ -43,7 +43,7 @@ const Member = (props) => {
     <div className="sidediv relative">
       <p className="headText text-lg border-white border-b-2 ">Members</p>
       <div className="my-2 overflow-scroll flex flex-col">
-        {member.map((team, index) => {
+        {member && member.map((team, index) => {
           return (
             <button className="divList" key={index}>
               {team}

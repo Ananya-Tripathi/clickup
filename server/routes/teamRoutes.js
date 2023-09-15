@@ -9,6 +9,7 @@ import {
   getTeamData,
   updateTeamDetails,
   addCommentToTeam,
+  getComments,
 } from "../controller/teamController.js";
 // import { checkAdmin, checkLoggedIn } from "../middleware/auth.js";
 export const teamRouter = express.Router();
@@ -20,6 +21,7 @@ teamRouter.post("/:teamId/add-members", addMembersToTeam);
 teamRouter.delete("/:teamId/delete-member/:memberId", deleteMemberFromTeam);
 teamRouter.get("/:teamId/getTeamData", getTeamData);
 teamRouter.put("/:teamName/edit", updateTeamDetails);
+teamRouter.get("/:teamId/getComments", getComments);
 teamRouter.post("/:teamId/addComment", addCommentToTeam);
 
 export default teamRouter;

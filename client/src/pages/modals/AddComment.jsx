@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 export const AddComment = (props) => {
   const [comment, setComment] = useState("");
+  const [exit, setExit] = useState(true);
   const { id } = useParams();
   async function newComment() {
     // console.log(id, props.teamId);
@@ -14,10 +15,12 @@ export const AddComment = (props) => {
         postedBy: id,
       }
     );
-    // alert(data.message);
+    setExit(false);
+    console.log(exit, "vghgv");
+    alert(data.message);
   }
 
-  if (!props.show) return null;
+  if (!props.show && exit) return null;
   return (
     <>
       <div className="fixed inset-0 bg-darkGrey backdrop-blur-sm bg-opacity-25 flex justify-center items-center z-20">

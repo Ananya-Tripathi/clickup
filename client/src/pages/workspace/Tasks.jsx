@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useCallback, useEffect } from "react";
-import {  PlusCircle } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import { EditTeam } from "../modals/EditTeam";
 const Tasks = (props) => {
   const [teamData, setTeamData] = useState("");
@@ -28,7 +28,7 @@ const Tasks = (props) => {
     console.log("good");
   }
   return (
-    <div className=" bg-lightGrey min-h-screen w-[67%] mx-auto text-center text-white p-2 rounded-md shadow-inner shadow-grey">
+    <div className=" bg-lightGrey min-h-screen w-[67%] mx-auto text-center text-white p-2 rounded-md shadow-inner shadow-grey relative">
       <div className="taskBox my-1 px-1">
         <h1
           className="text-2xl font-bold hover:cursor-pointer"
@@ -100,7 +100,7 @@ const Tasks = (props) => {
       </div>
 
       <form
-        className="taskBox mx-1 h-16 flex items-center justify-center bottom-1 w-[65%] absolute "
+        className="taskBox mx-1 h-16 flex items-center justify-center bottom-1 w-[97%] absolute "
         onSubmit={addComment}
       >
         <button className="flex items-center justify-center  h-10 w-10 rounded-full mr-2">

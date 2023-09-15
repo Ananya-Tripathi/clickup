@@ -229,3 +229,25 @@ export const addCommentToTeam = async (req, res) => {
     return res.status(500).json({ message: "Server Error" });
   }
 };
+
+export const getComments = async (req, res) => {
+  const { teamId } = req.params;
+
+  try {
+    const team = await Team.findById(teamId);
+
+    if (!team) {
+      return res.status(404).json({ message: "Team not found" });
+    }
+
+    const comments = team.comments.map((comment) => ({
+      text: comment.text,
+      postedBy: comment.postedBy,
+    }));
+
+    return res.status(200).json(comments);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Server Error" });
+  }
+};
