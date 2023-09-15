@@ -3,6 +3,7 @@ const teamSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    unique: true,
   },
   goal: {
     type: String,

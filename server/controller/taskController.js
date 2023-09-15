@@ -60,7 +60,6 @@ export const editTask = async (req, res, next) => {
   const updates = req.body;
 
   try {
-
     const updatedTask = await Task.findByIdAndUpdate(taskId, updates, {
       new: true,
     });

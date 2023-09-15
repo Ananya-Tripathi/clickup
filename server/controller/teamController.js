@@ -20,29 +20,27 @@ export const getAllTeam = async (req, res, next) => {
 
 export const createTeam = async (req, res, next) => {
   const { name, goal } = req.body;
-  const token = req.cookies.token;
-  const userId = jwt.verify(token, process.env.SECRET_KEY);
-  console.log(userId);
-  // try {
-  //   const team = new Team({
-  //     name,
-  //     goal,
-  //     admin: userId, // Set the admin field to the logged-in user's ID
-  //   });
 
-  //   await team.save();
-  //   return res.status(200).json({ message: "Team added successfully" });
-  // } catch (err) {
-  //   console.log(err);
-  //   return res.status(400).json({ message: "Failed to create team" });
-  // }
+  try {
+    const team = new Team({
+      name,
+      goal,
+    });
+
+    await team.save();
+    return res.status(200).json({ message: "Team added successfully" });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ message: "Failed to create team" });
+  }
 };
 
 export const deleteTeam = async (req, res, next) => {
-  const id = req.params.id;
-  console.log(id);
+  const teamName = req.params.teamName;
+  console.log(teamName);
+
   try {
-    const team = await Team.findByIdAndRemove(id);
+    const team = await Team.findOneAndRemove({ name: teamName });
     if (team) {
       return res.status(200).json({ message: "Team deleted successfully" });
     } else {
@@ -71,7 +69,7 @@ export const getMembers = async (req, res) => {
 };
 export const addMembersToTeam = async (req, res) => {
   const teamId = req.params.teamId;
-  const { memberIds } = req.body;
+  const { usernames } = req.body; // Updated to accept usernames
 
   try {
     const team = await Team.findById(teamId);
@@ -80,14 +78,17 @@ export const addMembersToTeam = async (req, res) => {
       return res.status(404).json({ message: "Team not found" });
     }
 
-    const users = await User.find({ _id: { $in: memberIds } });
+    const users = await User.find({ username: { $in: usernames } }); // Find users by usernames
 
-    if (users.length !== memberIds.length) {
-      return res.status(404).json({ message: "One or more users not found" });
+    if (users.length !== usernames.length) {
+      const missingUsernames = usernames.filter(
+        (username) => !users.some((user) => user.username === username)
+      );
+      return res
+        .status(404)
+        .json({ message: "Users not found", missingUsernames });
     }
-
-    // Update the team's 'members' array and add the team ID to each user's 'teams' array
-    team.members.push(...memberIds);
+    team.members.push(...users.map((user) => user._id));
     await team.save();
 
     for (const user of users) {
@@ -165,6 +166,64 @@ export const getTeamData = async (req, res) => {
     };
 
     return res.status(200).json(teamData);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server Error" });
+  }
+};
+
+export const updateTeamDetails = async (req, res) => {
+  const { teamName } = req.params;
+  const { name, goal } = req.body;
+
+  try {
+    const team = await Team.findOne({ name: teamName });
+
+    if (!team) {
+      return res.status(404).json({ message: "Team not found" });
+    }
+
+    if (name) {
+      team.name = name;
+    }
+
+    if (goal) {
+      team.goal = goal;
+    }
+
+    await team.save();
+
+    return res
+      .status(200)
+      .json({ message: "Team details updated successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server Error" });
+  }
+};
+
+export const addCommentToTeam = async (req, res) => {
+  const { teamId } = req.params;
+  const { text, postedBy } = req.body;
+
+  try {
+    const team = await Team.findById(teamId);
+
+    if (!team) {
+      return res.status(404).json({ message: "Team not found" });
+    }
+
+    // const user = await User.findById(postedBy);
+
+    // if (!user) {
+    //   return res.status(404).json({ message: "User not found" });
+    // }
+
+    const newComment = { text, postedBy };
+    team.comments.push(newComment);
+    await team.save();
+
+    return res.status(200).json({ message: "Comment added successfully" });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Server Error" });
