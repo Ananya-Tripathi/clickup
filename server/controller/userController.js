@@ -29,7 +29,7 @@ export const getAllUser = async (req, res, next) => {
   if (!users) {
     return res.status(404).json({ message: "No User Found" });
   } else {
-    return res.status(200).json({ users });
+    return res.status(200).json(users);
   }
 };
 

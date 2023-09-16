@@ -17,7 +17,7 @@ teamRouter.get("/", getAllTeam);
 teamRouter.post("/create", createTeam);
 teamRouter.get("/:teamId/members", getMembers);
 teamRouter.delete("/:teamName/delete", deleteTeam);
-teamRouter.post("/:teamId/add-members", addMembersToTeam);
+teamRouter.post("/:teamId/addMembers", addMembersToTeam);
 teamRouter.delete("/:teamId/delete-member/:memberId", deleteMemberFromTeam);
 teamRouter.get("/:teamId/getTeamData", getTeamData);
 teamRouter.put("/:teamName/edit", updateTeamDetails);

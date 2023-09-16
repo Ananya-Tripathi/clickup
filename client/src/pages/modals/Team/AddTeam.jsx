@@ -3,16 +3,16 @@ import axios from "axios";
 export const AddTeam = (props) => {
   const [name, setName] = useState("");
   const [goal, setGoal] = useState("");
-
+  const [isVisible, setIsVisible] = useState(true);
   async function newTeam() {
     const { data } = await axios.post(`http://localhost:5000/api/team/create`, {
       name,
       goal,
     });
+    setIsVisible(false);
     alert(data.message);
-    
   }
-  if (!props.show) return null;
+  if (!props.show || !isVisible) return null;
   return (
     <>
       <div className="fixed inset-0 bg-darkGrey backdrop-blur-sm bg-opacity-25 flex justify-center items-center z-20">

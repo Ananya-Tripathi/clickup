@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 
 export const AddComment = (props) => {
   const [comment, setComment] = useState("");
-  const [exit, setExit] = useState(true);
+
+  const [isVisible, setIsVisible] = useState(true);
   const { id } = useParams();
   async function newComment() {
     // console.log(id, props.teamId);
@@ -15,12 +16,12 @@ export const AddComment = (props) => {
         postedBy: id,
       }
     );
-    setExit(false);
-    console.log(exit, "vghgv");
+    setIsVisible(false);
+
     alert(data.message);
   }
 
-  if (!props.show && exit) return null;
+  if (!props.show || !isVisible) return null;
   return (
     <>
       <div className="fixed inset-0 bg-darkGrey  backdrop-blur-sm bg-opacity-25 flex justify-center items-center z-20">

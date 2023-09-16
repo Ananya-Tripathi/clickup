@@ -7,11 +7,13 @@ export const EditTeam = (props) => {
   const [goal, setGoal] = useState("");
   const [showEdit, setShowEdit] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   async function updateTeam() {
     const { data } = await axios.put(
       `http://localhost:5000/api/team/${props.name}/edit`,
       { name, goal }
     );
+    setIsVisible(false);
     alert(data.message);
     setShowEdit(false);
   }
@@ -19,11 +21,12 @@ export const EditTeam = (props) => {
     const { data } = await axios.delete(
       `http://localhost:5000/api/team/${props.name}/delete`
     );
+    setIsVisible(false);
     alert(data.message);
     setShowDelete(false);
   }
 
-  if (!props.show) return null;
+  if (!props.show || !isVisible) return null;
   return (
     <>
       <div className="fixed inset-0 bg-darkGrey backdrop-blur-sm bg-opacity-25 flex justify-center items-center z-20">

@@ -69,7 +69,7 @@ export const getMembers = async (req, res) => {
 };
 export const addMembersToTeam = async (req, res) => {
   const teamId = req.params.teamId;
-  const { usernames } = req.body; // Updated to accept usernames
+  const { usernames } = req.body;
 
   try {
     const team = await Team.findById(teamId);
@@ -78,17 +78,11 @@ export const addMembersToTeam = async (req, res) => {
       return res.status(404).json({ message: "Team not found" });
     }
 
-    const users = await User.find({ username: { $in: usernames } }); // Find users by usernames
+    const users = await User.find({ username: { $in: usernames } });
 
-    if (users.length !== usernames.length) {
-      const missingUsernames = usernames.filter(
-        (username) => !users.some((user) => user.username === username)
-      );
-      return res
-        .status(404)
-        .json({ message: "Users not found", missingUsernames });
-    }
-    team.members.push(...users.map((user) => user._id));
+    const userIds = users.map((user) => user._id);
+
+    team.members.push(...userIds);
     await team.save();
 
     for (const user of users) {
@@ -229,7 +223,6 @@ export const addCommentToTeam = async (req, res) => {
     return res.status(500).json({ message: "Server Error" });
   }
 };
-
 
 export const getComments = async (req, res) => {
   const { teamId } = req.params;
