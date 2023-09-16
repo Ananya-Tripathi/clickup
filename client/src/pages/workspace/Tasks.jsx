@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useCallback, useEffect } from "react";
 import { PlusCircle } from "lucide-react";
-import { EditTeam } from "../modals/EditTeam";
+import { EditTeam } from "../modals/Team/EditTeam";
 const Tasks = (props) => {
   const [teamData, setTeamData] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -99,7 +99,7 @@ const Tasks = (props) => {
         </div>
       </div>
 
-      <form
+      {/* <form
         className="taskBox mx-1 h-16 flex items-center justify-center bottom-1 w-[97%] absolute "
         onSubmit={addComment}
       >
@@ -111,7 +111,7 @@ const Tasks = (props) => {
           type="text"
           placeholder="Add Comment"
         />
-      </form>
+      </form> */}
     </div>
   );
 };

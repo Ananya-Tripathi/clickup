@@ -23,7 +23,7 @@ export const AddComment = (props) => {
   if (!props.show && exit) return null;
   return (
     <>
-      <div className="fixed inset-0 bg-darkGrey backdrop-blur-sm bg-opacity-25 flex justify-center items-center z-20">
+      <div className="fixed inset-0 bg-darkGrey  backdrop-blur-sm bg-opacity-25 flex justify-center items-center z-20">
         <div className="w-[600px] bg-darkGrey rounded-md flex flex-col p-4 shadow-lightGrey shadow-inner ">
           {/* <button className="rounded-full w-8 h-8 p-2 justify-end items-end" onClick={props.onClose}>x</button> */}
           <input

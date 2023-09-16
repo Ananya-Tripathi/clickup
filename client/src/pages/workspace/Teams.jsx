@@ -4,7 +4,7 @@ import Tasks from "./Tasks";
 import Comments from "./Comments";
 import Member from "./Member";
 import Options from "./Options";
-import { AddTeam } from "../modals/AddTeam.jsx";
+import { AddTeam } from "../modals/Team/AddTeam.jsx";
 const Teams = () => {
   const [teams, setTeams] = useState([]);
   const [teamID, setTeamID] = useState("");

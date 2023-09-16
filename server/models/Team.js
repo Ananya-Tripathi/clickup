@@ -26,7 +26,7 @@ const teamSchema = new mongoose.Schema({
   comments: [
     {
       text: { type: String },
-      postedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      postedBy: { type: String, ref: "User" },
     },
   ],
 });

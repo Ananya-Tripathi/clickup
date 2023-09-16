@@ -1,10 +1,13 @@
 import React from "react";
 import axios from "axios";
 import { useState, useCallback, useEffect } from "react";
-import { AddComment } from "../modals/AddComment";
+import { AddComment } from "../modals/Comments/AddComment";
+import { ViewComments } from "../modals/Comments/ViewComments";
 
 const Comments = (props) => {
   const [comments, setComments] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [showComments, setShowComments] = useState(false);
   const getComments = useCallback(async () => {
     console.log(" CTeam Id", props.teamID);
     const { data } = await axios.get(
@@ -19,10 +22,26 @@ const Comments = (props) => {
       getComments();
     }
   }, [props.teamID, getComments]);
-  const [showModal, setShowModal] = useState(false);
+
   return (
     <div className="sidediv relative">
-      <p className="headText text-lg border-b-2 border-white ">Comments</p>
+      <p
+        className="headText text-lg border-b-2 border-white hover:cursor-pointer"
+        onClick={() => setShowComments(true)}
+      >
+        Comments
+      </p>
+      {showComments && (
+        <ViewComments
+          comment={comments}
+          show={showComments}
+          onClose={() => {
+            setShowComments(false);
+          }}
+        />
+      )}
+
+      {/* preview comment */}
       <div className="my-2 overflow-scroll flex flex-col h-[70%]">
         {comments &&
           comments.map((team, index) => {
@@ -33,6 +52,8 @@ const Comments = (props) => {
             );
           })}
       </div>
+
+      {/* Add new Comment*/}
       <button className="divButton" onClick={() => setShowModal(true)}>
         Add Comment
       </button>

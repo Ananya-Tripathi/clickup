@@ -213,13 +213,13 @@ export const addCommentToTeam = async (req, res) => {
       return res.status(404).json({ message: "Team not found" });
     }
 
-    // const user = await User.findById(postedBy);
+    const user = await User.findById(postedBy);
 
-    // if (!user) {
-    //   return res.status(404).json({ message: "User not found" });
-    // }
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-    const newComment = { text, postedBy };
+    const newComment = { text, postedBy: user.username }; // Assuming username is the field you want to store
     team.comments.push(newComment);
     await team.save();
 
@@ -229,6 +229,7 @@ export const addCommentToTeam = async (req, res) => {
     return res.status(500).json({ message: "Server Error" });
   }
 };
+
 
 export const getComments = async (req, res) => {
   const { teamId } = req.params;

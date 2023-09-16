@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useCallback } from "react";
 import React, { useEffect, useState } from "react";
-import { EditMember } from "../modals/EditMember";
+import { EditMember } from "../modals/Member/EditMember";
 const Member = (props) => {
   const [member, setMembers] = useState([]);
   const [newUsers, setNewUsers] = useState([]);
